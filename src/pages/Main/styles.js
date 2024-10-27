@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css , keyframes} from "styled-components";
 
 
 export const Container = styled.div`
@@ -33,8 +33,19 @@ export const Form = styled.form`
     }
 `;
 
-export const SubmitButton = styled.button.attrs({
-    type: 'submit'})`
+// animation button
+const rotate = keyframes`
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+`;
+
+export const SubmitButton = styled.button.attrs(props => ({
+    type: 'submit',
+    disabled: props.loading}))`
     background: #0D2636;
     border: 0;
     padding: 0 15px;
@@ -43,6 +54,16 @@ export const SubmitButton = styled.button.attrs({
     justify-content: center;
     align-items: center;
     color: #FFF;
-    font-weight: bold;   
+    font-weight: bold;
+    &[disabled] {
+        cursor: not-allowed;
+        opacity: 0.6;
+    }  
+    
+    ${props => props.loading && css`
+        svg {
+            animation: ${rotate} 2s linear infinite;
+        }
+    `}
 `;
 
